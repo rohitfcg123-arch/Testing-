@@ -54,7 +54,7 @@ const seed=[
 ];
 const KEY="testlab-v1";
 let data=load(), selected=data.projects[0]?.id||"focusfence", auth=null, db=null, firebaseReady=false, total=0, pass=0, fail=0;
-function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||"null");if(v?.projects)return v}catch(e){}return{projects:seed.map(x=>({...x})),runs:[],checkCount:0}}
+function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&&Array.isArray(v.projects)){if(v.projects.length===0)v.projects=seed.map(x=>({...x}));else{const ids=new Set(v.projects.map(p=>p.id));seed.forEach(p=>{if(!ids.has(p.id))v.projects.push({...p})})}if(!Array.isArray(v.runs))v.runs=[];if(typeof v.checkCount!=="number")v.checkCount=0;return v}}catch(e){}return{projects:seed.map(x=>({...x})),runs:[],checkCount:0}}
 function save(){localStorage.setItem(KEY,JSON.stringify(data));renderStats()}
 function log(msg,type=""){const line=document.createElement("div");line.className="logline "+type;line.textContent="["+new Date().toLocaleTimeString()+"] "+msg;$("#console").prepend(line)}
 function renderStats(){$("#projectCount").textContent=data.projects.length;$("#checkCount").textContent=data.checkCount||0;$("#passCount").textContent=data.runs.filter(x=>x.status==="PASS").length;$("#failCount").textContent=data.runs.filter(x=>x.status==="FAIL").length}
