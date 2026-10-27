@@ -1,0 +1,10 @@
+{
+  "name": "TestLab — Universal App Tester",
+  "short_name": "TestLab",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#10131c",
+  "description": "Offline-first universal app testing dashboard"
+}
